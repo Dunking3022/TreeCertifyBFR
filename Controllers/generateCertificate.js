@@ -8,7 +8,7 @@ const {
 
 
 exports.generateCertificate = async (arg)=>{
-  console.log(">>Generating Certificate for "+arg.mail);
+  console.log(">>Generating Certificate for "+arg.Email);
   const imgName = Date.now()+arg.Name;
   const backgroundImage = await loadImage('./bin/template.png');
   registerFont('./Fonts/Luciole-Regular.ttf', { family: 'Luciole' });
