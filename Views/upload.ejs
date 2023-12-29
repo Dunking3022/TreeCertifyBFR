@@ -54,6 +54,21 @@
     <p>Convert your Excel file to JSON </p>
   </div>
   <!--Content ends-->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    var form = document.querySelector('.upload-form');
+
+    if (form) {
+      form.addEventListener('submit', function () {
+        var submitButton = form.querySelector('.submit-button');
+        submitButton.innerText = 'Uploading';
+        submitButton.classList.add('uploading');
+        submitButton.disabled = true;
+        });
+      }
+    });
+  </script>
         
 </body>
 </html>
