@@ -11,7 +11,7 @@ module.exports = async (req,res)=>{
     console.log(userJSON);
     Donor.insertMany(userJSON)
     .then(()=>{
-        res.send("Documents Added to Database! Please check your mailbox!")
+        res.render("confirmation");
     })
     .catch((err)=>{
         res.send("Error creating Documents. Try again later!");
