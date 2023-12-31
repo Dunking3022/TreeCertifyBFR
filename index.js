@@ -3,7 +3,7 @@ const app = express();
 const db = require('./Middlewares/db');
 const path = require('path');
 const email = require('./Controllers/emailhandler.js')
-const PORT = 3002;
+const PORT = 3000;
 app.use(express.static(path.join(__dirname, 'public')))
 const xlreader =  require('./Controllers/xltojson');
 const multer = require('multer');
@@ -11,6 +11,9 @@ const generateCertificate = require('./Controllers/generateCertificate');
 const buffer_to_json = require('./Controllers/buffer_to_json.js');
 const storage = multer.memoryStorage(); 
 const upload = multer({storage: storage});
+const fetchData = require("./Controllers/fetchUserData.js");
+const { table } = require('console');
+const displayVerificationStatus = require('./Controllers/displayVerificationStatus.js');
 
 db.connectToDB();
 
@@ -27,6 +30,7 @@ app.get('/certificate',(req,res)=>{
     res.render('certificate');
 })
 
+app.get('/verify/:id',displayVerificationStatus)
 
 app.post('/upload',upload.single('uploadfile'),buffer_to_json)
 

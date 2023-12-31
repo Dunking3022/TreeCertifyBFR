@@ -147,6 +147,25 @@ input[type=file]::-ms-browse {
   margin-right: 5px;
 }
 
+table {
+  font-family: "Lato", sans-serif;
+  border-collapse: collapse;
+  width: 50%; /* Adjust the width as needed */
+  margin: auto; /* Center the table horizontally */
+  margin-top: -50px;
+  margin-bottom: 50px;
+}
+
+td.table-heading{
+  color: pink;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

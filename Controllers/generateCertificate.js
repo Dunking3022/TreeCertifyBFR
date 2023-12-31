@@ -5,9 +5,11 @@ const {
   loadImage,
   registerFont,
 } = require('canvas');
+var qr = require('qrcode')
 
 
-exports.generateCertificate = async (arg)=>{
+
+exports.generateCertificate = async (arg, id, idate)=>{
   console.log(">>Generating Certificate for "+arg.Email);
   const imgName = Date.now()+arg.Name;
   const backgroundImage = await loadImage('./bin/template.png');
@@ -24,8 +26,26 @@ exports.generateCertificate = async (arg)=>{
   context.fillText(arg.TreeCount, 1000, 795);
   context.font = '30px Luciole';
   context.fillStyle = 'black';
-  const today = new Date();
-  const issueDate = "Issued on : "+today.toUTCString();
+
+  const qrCodeData = `https://treecertifybfr.onrender.com/verify/${id}`;
+  const qrCodeImage = await qr.toBuffer(qrCodeData, { type: 'png' });
+  const qrCodeImageObject = await loadImage(qrCodeImage);
+  context.drawImage(qrCodeImageObject, 1600, 795, 200, 200);
+
+  
+  context.textAlign='center';
+  context.fillStyle = 'black';
+  context.font = '20px Luciole';
+  context.fillText("Scan to verify", 1695, 1009);
+
+  const issueDate = "Issued on : "+idate;
   context.fillText(issueDate,1000,1360);
+  fs.writeFile("./testing.pdf",imageCanvas.toBuffer('file/pdf'),(err) => {
+    if (err) {
+      console.error('Error writing file:', err);
+    } else {
+      console.log('File saved successfully:');
+    }
+  });
   return(imageCanvas.toBuffer('file/pdf'));
 }

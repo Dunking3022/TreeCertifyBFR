@@ -8,14 +8,19 @@ const Donor = mongoose.Schema({
     Email: {type: String, required : true, index: true},
     Amount : {type: Number, required : true},
     TreeCount: {type: Number, required : true},
+    IssueDate: {type: Date},
     CertificateStatus: {type: String, enum : ['PENDING','SENT','FAILED'], index: true, default: 'PENDING'}
 })
 
 Donor.pre("insertMany", async function (next, docs) {
     try {
       const promises = docs.map(async (doc) => {
+        const customID = new mongoose.Types.ObjectId(); 
+        doc._id = customID;
         try {
-          const filebuffer = await generateCertificate.generateCertificate(doc);
+          const issueDate = new Date().toUTCString();
+          doc.IssueDate = issueDate;
+          const filebuffer = await generateCertificate.generateCertificate(doc, customID, issueDate);
           const bool = await emailhandler.transferMail(filebuffer, doc.Name, doc.Amount, doc.Email);
   
           if (bool) {
