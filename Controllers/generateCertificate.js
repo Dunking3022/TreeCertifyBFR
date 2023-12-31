@@ -40,12 +40,5 @@ exports.generateCertificate = async (arg, id, idate)=>{
 
   const issueDate = "Issued on : "+idate;
   context.fillText(issueDate,1000,1360);
-  fs.writeFile("./testing.pdf",imageCanvas.toBuffer('file/pdf'),(err) => {
-    if (err) {
-      console.error('Error writing file:', err);
-    } else {
-      console.log('File saved successfully:');
-    }
-  });
   return(imageCanvas.toBuffer('file/pdf'));
 }
